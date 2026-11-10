@@ -1,0 +1,23 @@
+ENCUESTA 1 - EQUIPO PREFERIDO
+Pregunta: ¿En que equipo de Excalibur 3D te gustaria trabajar?
+Grupo 1 - Espada (M01 hoja / M02 empunadura)
+Grupo 2 - Escenario (M03 piedra / M04 entorno)
+Grupo 3 - Graficos (M05 texturas / M06 mallas y normales)
+Grupo 4 - Camara (M07 cuaterniones / M08 camara)
+Grupo 5 - Integracion (M09 iluminacion / M10 controles)
+
+ENCUESTA 2 - MODULO PREFERIDO
+Pregunta: ¿Que modulo individual de Excalibur 3D prefieres desarrollar?
+M01 - Hoja de Excalibur (Grupo 1)
+M02 - Empunadura (Grupo 1)
+M03 - Piedra 3D (Grupo 2)
+M04 - Entorno medieval (Grupo 2)
+M05 - Texturas UV (Grupo 3)
+M06 - Mallas, normales y culling (Grupo 3)
+M07 - Cuaterniones y SLERP (Grupo 4)
+M08 - Camara 3D (Grupo 4)
+M09 - Iluminacion y materiales (Grupo 5)
+M10 - Controles e integracion (Grupo 5)
+
+Desactivar multiples respuestas; usar resultados como preferencias y adjudicar
+1 integrante por modulo, 2 por grupo. Whatsapp no restringe plazas automaticamente.
