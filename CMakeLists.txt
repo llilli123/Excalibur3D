@@ -13,7 +13,7 @@ add_executable(Excalibur3D
     src/objetos/EspadaHoja.cpp
     src/objetos/EspadaEmpunadura.cpp
     src/objetos/Piedra.cpp
-    src/objetos/Entorno.cpp
+    src/modulos/m04_entorno/Entorno.cpp
     src/graficos/Texturas.cpp
     src/graficos/Mallas.cpp
     src/graficos/Iluminacion.cpp

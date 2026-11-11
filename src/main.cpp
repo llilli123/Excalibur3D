@@ -17,11 +17,9 @@ namespace {
         excalibur::camara::aplicar();
         excalibur::graficos::aplicarIluminacion();
 
-        // IMPORTANTE: mantener este orden e implementar cada modulo en su archivo.
-        excalibur::objetos::dibujarEntorno();     // M04
-        excalibur::objetos::dibujarPiedra();      // M03
-        excalibur::objetos::dibujarHojaEspada();  // M01
-        excalibur::objetos::dibujarEmpunadura();  // M02
+        // MODO DE PRUEBA M04: ejecutar solo la escenografia de entorno.
+        // Al integrar, restaurar las llamadas de los demas modulos en este orden.
+        excalibur::objetos::dibujarEntorno();
 
         glutSwapBuffers();
     }
@@ -63,7 +61,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(1000, 700);
     glutInitWindowPosition(80, 60);
-    glutCreateWindow("Excalibur 3D - Base modular CG II");
+    glutCreateWindow("Excalibur 3D - Prueba M04: Entorno medieval");
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
     inicializarGL();
@@ -72,8 +70,8 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(excalibur::controles::teclado);
     glutTimerFunc(16, temporizador, 0);
 
-    std::cout << "Excalibur 3D (base): 1/2/3 vistas, P wireframe, ESC salir.\n"
-              << "PENDIENTE: texturas UV reales, normales verificadas y camara SLERP.\n";
+    std::cout << "Prueba M04 (entorno): 1/2/3 vistas, P wireframe, ESC salir.\n"
+              << "Se dibuja solamente la escenografia de M04.\n";
     glutMainLoop();
     excalibur::graficos::liberarTexturas();
     return 0;
