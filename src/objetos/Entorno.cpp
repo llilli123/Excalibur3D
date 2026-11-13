@@ -237,10 +237,13 @@ void dibujarConejo(float x, float z) {
     glPopMatrix();
 
     glPopMatrix();
+    glPopAttrib();
 }
 } // namespace
 
 void dibujarEntorno() {
+    // Evitar fugas de materiales, color y texturas hacia M03/M01/M02.
+    glPushAttrib(GL_CURRENT_BIT | GL_LIGHTING_BIT | GL_ENABLE_BIT | GL_TEXTURE_BIT);
     // M04 se modelo en 23x23 unidades; presentar la vitrina en 12x12,
     // sin escalar los modulos de piedra y espada.
     glPushMatrix();
