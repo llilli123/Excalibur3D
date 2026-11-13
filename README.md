@@ -1,9 +1,10 @@
 # Excalibur 3D - plantilla de trabajo (CG II)
 
 Vitrina 3D inspirada en *la espada en la piedra*, con **C++17, OpenGL clasico y FreeGLUT**.
-Preparada para 10 responsables en 5 equipos. **No es la entrega final**: el ZIP contiene
-una previsualizacion 3D y puntos de extension `M01` a `M10`. Las texturas UV reales y
-la camara con SLERP **estan pendientes**, tal como se indica en el codigo.
+Organizada en 10 módulos y 5 equipos. La rama `development` es la base para
+fusionar las implementaciones independientes. La plantilla inicial contiene objetos
+provisionales; los cambios de cada módulo se incorporan mediante Pull Requests.
+El cumplimiento final de texturas, normales y SLERP se verifica al cerrar la entrega.
 
 > El enunciado del profesor menciona **OpenGL/C** y un esqueleto docente que ya incluye
 > un cargador de imagen. Ese esqueleto NO fue adjuntado. Esta plantilla independiente
@@ -33,10 +34,12 @@ si utiliza un generador multiconfiguracion (Visual Studio).
 - `ESC`: salir.
 - `L`: alterna la segunda luz cuando M09 está integrado.
 
-## Escena inicial
-Espada simple (cubos), empunadura, roca (esfera deformada), plano de suelo y
-una luz clasica. Esta previsualizacion puede visualizarse incluso sin imagenes.
-Las implementaciones definitivas se incorporan desde las ramas de los módulos; el repositorio de integración debe demostrar mallas propias, UV y SLERP.
+## Alcance del proyecto
+Vitrina medieval con hoja de Excalibur, empuñadura, piedra irregular y entorno.
+M01 aporta la hoja facetada; M03, la roca de normales suaves; M05, las texturas
+de roca y suelo; M07/M08, cámara SLERP; M09, iluminación y materiales.
+M02 (empuñadura final) y M06 (revisión de normales y culling) quedan a cargo
+del equipo. No confundir presencia de código con ejecución verificada.
 
 ## Distribucion y ramas
 | Modulo | Trabajo | Rama |
