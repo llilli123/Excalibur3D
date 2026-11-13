@@ -4,25 +4,22 @@
 
 | Ruta | Propósito |
 |---|---|
-| `src/modulos/m04_entorno/Entorno.cpp` | Implementación completa de la escenografía M04. |
-| `src/modulos/m04_entorno/README.md` | Reglas de propiedad, espacio y futura integración de M04. |
+| `src/objetos/Entorno.cpp` | Implementación completa de la escenografía M04. |
+| `docs/Documentacion M4/README_M04.md` | Reglas de propiedad, espacio y futura integración de M04. |
 | `docs/Documentacion M4/BITACORA_M04.md` | Bitácora de investigación y pruebas del módulo. |
 | `docs/Documentacion M4/CAMBIOS_M04.md` | Este registro de rutas y cambios. |
 | `docs/Documentacion M4/ELEMENTOS_M04.md` | Inventario técnico de las figuras de la escena. |
 
-## Archivos modificados
+## Cambios históricos y resolución
 
-| Ruta | Cambio realizado |
-|---|---|
-| `CMakeLists.txt` | La fuente de entorno pasó de `src/objetos/Entorno.cpp` a `src/modulos/m04_entorno/Entorno.cpp`. |
-| `src/main.cpp` | Modo temporal de prueba: solo llama a `excalibur::objetos::dibujarEntorno()` y nombra la ventana como prueba M04. |
-| `src/camara/Camara.cpp` | Se alejaron las tres vistas para encuadrar la escenografía. Es un ajuste temporal de previsualización que debe coordinarse con M08. |
+Durante el desarrollo M04 trasladó provisionalmente la fuente y modificó `main.cpp`,
+`Camara.cpp` y `CMakeLists.txt` para previsualizar el entorno completo.
 
-## Archivo trasladado
-
-| Ruta anterior | Ruta actual | Motivo |
-|---|---|---|
-| `src/objetos/Entorno.cpp` | `src/modulos/m04_entorno/Entorno.cpp` | Separar los archivos de M04 de los objetos compartidos y reducir solapamientos con otros integrantes. |
+**Resolución final antes del merge:** la fuente quedó en
+`src/objetos/Entorno.cpp`; los tres archivos compartidos fueron restaurados
+desde `development`. No se exige a M08 ni a M10 conservar la previsualización.
+Se incorporó una escala uniforme de 23 a 12 unidades y la activación de
+la textura de suelo solamente cuando el encabezado de M05 está disponible.
 
 ## Archivos que permanecen sin cambios
 

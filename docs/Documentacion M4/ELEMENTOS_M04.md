@@ -6,7 +6,7 @@ La función interna `dibujarElipsoide()` genera una malla cerrada mediante banda
 
 | Elemento | Construcción | Cantidad / detalle |
 |---|---|---|
-| Suelo | Un `GL_QUADS` de cuatro vértices. | Normal `+Y`, caras CCW, UV de 0 a 1 y tamaño 23 × 23. |
+| Suelo | Un `GL_QUADS` de cuatro vértices. | Normal `+Y`, caras CCW, UV de 0 a 4; dimensiones internas 23 × 23, reducidas a 12 × 12 al renderizar. |
 | Anillo de agua | Un `GL_QUAD_STRIP` circular. | 32 segmentos; radio interior 2.55 y exterior 3.80. Mantiene un islote de tierra central más amplio para la piedra. |
 | Canales de agua | Dos `GL_QUAD_STRIP` curvos. | Un canal entra por la izquierda y otro sale por la derecha; cada uno usa cinco pares de puntos de orilla. |
 | Rocas pequeñas | Un elipsoide low-poly por roca. | 5 rocas; 8 cortes y 4 bandas, con escala y rotación distintas. |
@@ -20,7 +20,7 @@ La función interna `dibujarElipsoide()` genera una malla cerrada mediante banda
 - El islote central queda libre: allí M03 puede poner la piedra y M01/M02 la espada.
 - El anillo de agua está apenas elevado a `y = 0.012` para evitar parpadeo con el suelo (`z-fighting`).
 - Rocas, arbustos, madrigueras y hierba se colocan fuera de la silueta central.
-- Los colores actuales son temporales mediante `glColor3f`; M05 aplicará materiales y texturas.
+- Los colores actuales son temporales mediante `glColor3f`; El suelo activa la textura BMP de M05 cuando esté integrado; las otras piezas conservan colores propios.
 
 ## Reglas de integración
 

@@ -14,4 +14,4 @@ Esta carpeta pertenece exclusivamente al responsable de M04.
 - Cada uso de `glPushMatrix()` debe tener su `glPopMatrix()` correspondiente.
 
 El render principal y la cámara permanecen bajo M10/M08. El entorno ocupa 12x12 unidades en la escena.
-demás módulos.
+

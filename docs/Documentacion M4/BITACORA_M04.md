@@ -30,6 +30,6 @@ La escena quedaba muy cerrada para comprobar distribución y composición. Se al
 
 ## Pendientes de integración
 
-- M05 aplicará texturas definitivas al suelo, agua y decoración.
-- Antes de fusionar, restaurar en `main.cpp` las llamadas a M01, M02 y M03; ahora está en modo de prueba M04.
+- M05 aporta la textura real del suelo; agua y decoración permanecen con color/material.
+- Se restauraron las llamadas de M01, M02 y M03 en `main.cpp`; se devolvió la cámara a M08.
 - Coordinar con M03 la colocación final de la piedra en el islote central.
