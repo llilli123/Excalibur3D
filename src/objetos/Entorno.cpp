@@ -237,7 +237,6 @@ void dibujarConejo(float x, float z) {
     glPopMatrix();
 
     glPopMatrix();
-    glPopAttrib();
 }
 } // namespace
 
@@ -298,5 +297,6 @@ void dibujarEntorno() {
     dibujarConejo(-5.30f, -4.15f);
     dibujarConejo(5.80f, 4.40f);
     glPopMatrix();
+    glPopAttrib();
 }
 }
