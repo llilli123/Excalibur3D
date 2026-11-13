@@ -106,7 +106,9 @@ Malla crearRoca() {
 }
 
 void dibujarPiedra() {
-    static Malla roca = crearRoca();   // se crea una sola vez y se reutiliza
+    static Malla roca = crearRoca();
+    // Preservar materiales, textura y color para no alterar la espada o empuñadura.
+    glPushAttrib(GL_CURRENT_BIT | GL_LIGHTING_BIT | GL_ENABLE_BIT | GL_TEXTURE_BIT);   // se crea una sola vez y se reutiliza
 
 #ifdef EXCALIBUR_M09_MATERIALES
     graficos::aplicarMaterial(graficos::Material::Piedra);
@@ -127,5 +129,6 @@ void dibujarPiedra() {
 #ifdef EXCALIBUR_M05_DISPONIBLE
     graficos::desactivarTextura();
 #endif
+    glPopAttrib();
 }
 }
