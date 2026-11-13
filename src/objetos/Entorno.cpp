@@ -254,7 +254,9 @@ void dibujarEntorno() {
     glColor3f(1.0f, 1.0f, 1.0f);
 #endif
     // Suelo: cuatro vértices, normal +Y, winding CCW y UV completos.
+#ifndef EXCALIBUR_M05_DISPONIBLE
     glColor3f(0.22f, 0.30f, 0.20f);
+#endif
     glBegin(GL_QUADS);
     glNormal3f(0.0f, 1.0f, 0.0f);
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-11.5f, 0.0f, -11.5f);
