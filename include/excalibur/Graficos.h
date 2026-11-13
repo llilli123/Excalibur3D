@@ -21,7 +21,25 @@ namespace excalibur::graficos {
                                      const std::vector<unsigned>& indices);
     void configurarCulling();
 
-    // M09. Iluminacion clasica OpenGL, punto de partida.
+    // M09. Iluminacion clasica OpenGL y materiales (modelo Phong)
     void inicializarIluminacion();
     void aplicarIluminacion();
+
+    enum class Material {
+        MetalHoja,
+        MetalDorado,
+        CueroMango,
+        Piedra,
+        Entorno,
+        Defecto
+    };
+
+    void aplicarMaterial(Material mat);
+    void materialMetalHoja();
+    void materialMetalDorado();
+    void materialCuero();
+    void materialPiedra();
+    void materialEntorno();
+    void alternarLuzSecundaria();
+    bool estaLuzSecundariaActiva();
 }
