@@ -60,7 +60,9 @@ bool cargarBMP(const std::string& ruta, Imagen& img) {
     const unsigned int bits = leer16(&b[28]);
     const unsigned int compresion = leer32(&b[30]);
 
-    if ((bits != 24 && bits != 32) || (compresion != 0 && compresion != 3) || ancho <= 0 || altoArchivo == 0) {
+    // Este lector entiende BMP RGB sin compresion. BI_BITFIELDS (3) requiere
+    // interpretar mascaras de color, por lo que no debe procesarse como RGB.
+    if ((bits != 24 && bits != 32) || compresion != 0 || ancho <= 0 || altoArchivo == 0) {
         std::fprintf(stderr, "[M05] %s: guarde la imagen como BMP de 24 bits\n", ruta.c_str());
         return false;
     }
@@ -119,6 +121,8 @@ GLuint crearTextura(const Imagen& img) {
     GLuint id = 0;
     glGenTextures(1, &id);                    // 1. pedir un ID de textura
     glBindTexture(GL_TEXTURE_2D, id);         // 2. activarla para configurarla
+    GLint alineacionAnterior = 4;
+    glGetIntegerv(GL_UNPACK_ALIGNMENT, &alineacionAnterior);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);    //    las filas RGB no traen relleno
 
     // 3. UV fuera de 0..1 -> repetir la imagen (asi el suelo la repite varias veces)
@@ -132,6 +136,7 @@ GLuint crearTextura(const Imagen& img) {
 
     // 5. Copiar los pixeles a la memoria de video
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.ancho, img.alto, 0, GL_RGB, GL_UNSIGNED_BYTE, img.rgb.data());
+    glPixelStorei(GL_UNPACK_ALIGNMENT, alineacionAnterior);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     return id;
@@ -185,9 +190,13 @@ void liberarTexturas() {
 // Declaradas en Texturas.h (para M03 y M04)
 // =============================================================================
 void activarTextura(Textura t) {
-    if (t == Textura::Total || g_ids[static_cast<int>(t)] == 0) return;
+    const int indice = static_cast<int>(t);
+    if (indice < 0 || indice >= static_cast<int>(Textura::Total) || g_ids[indice] == 0) {
+        desactivarTextura(); // evita heredar la textura del objeto anterior
+        return;
+    }
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, g_ids[static_cast<int>(t)]);
+    glBindTexture(GL_TEXTURE_2D, g_ids[indice]);
     glColor3f(1.0f, 1.0f, 1.0f);   // blanco: con GL_COLOR_MATERIAL no oscurece la foto
 }
 
