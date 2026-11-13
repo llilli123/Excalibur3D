@@ -194,6 +194,24 @@ void dibujarMataDeHierba(float x, float z, float escala, float rotacion) {
     glPopMatrix();
 }
 
+void dibujarMonteLejano(float x, float z, float radio, float alto) {
+    // Silueta de baja densidad: queda en el fondo sin competir con Excalibur.
+    glPushMatrix();
+    glTranslatef(x, 0.0f, z);
+    glRotatef(-90.0f, 1.0f, 0.0f, 0.0f); // cono FreeGLUT (+Z) a +Y
+    glColor3f(0.13f, 0.24f, 0.14f);
+    glutSolidCone(radio, alto, 9, 3);
+    glPopMatrix();
+
+    // Una segunda masa evita una silueta perfectamente cónica.
+    glPushMatrix();
+    glTranslatef(x + radio * 0.42f, 0.0f, z + radio * 0.18f);
+    glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+    glColor3f(0.10f, 0.19f, 0.11f);
+    glutSolidCone(radio * 0.66f, alto * 0.72f, 8, 2);
+    glPopMatrix();
+}
+
 void dibujarConejo(float x, float z) {
     const float direccionHaciaCentro = std::atan2(x, z) * 180.0f / pi;
     glPushMatrix();
@@ -243,10 +261,10 @@ void dibujarConejo(float x, float z) {
 void dibujarEntorno() {
     // Evitar fugas de materiales, color y texturas hacia M03/M01/M02.
     glPushAttrib(GL_CURRENT_BIT | GL_LIGHTING_BIT | GL_ENABLE_BIT | GL_TEXTURE_BIT);
-    // M04 se modelo en 23x23 unidades; presentar la vitrina en 12x12,
-    // sin escalar los modulos de piedra y espada.
+    // M04 se modelo en 23x23 unidades; el terreno pasa a 16x16 para dar
+    // profundidad al entorno, sin escalar los modulos de piedra y espada.
     glPushMatrix();
-    constexpr float escalaEscena = 12.0f / 23.0f;
+    constexpr float escalaEscena = 16.0f / 23.0f;
     glScalef(escalaEscena, escalaEscena, escalaEscena);
 #ifdef EXCALIBUR_M09_MATERIALES
     graficos::aplicarMaterial(graficos::Material::Entorno);
@@ -270,6 +288,9 @@ void dibujarEntorno() {
     graficos::desactivarTextura();
 #endif
     dibujarSistemaDeAgua();
+
+    // Al fondo de la primera vista: amplía la escena sin ocultar la piedra.
+    dibujarMonteLejano(-7.90f, -9.45f, 2.45f, 4.40f);
 
     // Todo queda fuera del área central reservada para la piedra y la espada.
     dibujarRoca(-8.4f, -5.5f, 0.95f, 18.0f);

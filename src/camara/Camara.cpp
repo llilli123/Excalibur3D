@@ -19,11 +19,12 @@ namespace {
     // Un segundo hace visible el movimiento sin que el control se perciba lento.
     constexpr float duracionTransicion = 1.0f;
 
-    // Posiciones de las tres vistas que solicitan las teclas 1, 2 y 3.
+    // Posiciones ajustadas al terreno 16x16: mantienen a la espada como foco
+    // y dejan leer el monte lejano y los límites del entorno.
     const Vec3 posiciones[] = {
-        {4.7f, 3.8f, 6.5f}, // frente
-        {6.0f, 3.9f, 0.1f}, // lateral
-        {3.4f, 7.8f, 3.0f}  // superior
+        {5.6f, 4.4f, 8.2f}, // frente
+        {7.5f, 4.8f, 0.1f}, // lateral
+        {4.6f, 9.4f, 4.1f}  // superior
     };
 
     Vec3 restar(Vec3 a, Vec3 b) { return {a.x-b.x, a.y-b.y, a.z-b.z}; }
