@@ -32,3 +32,8 @@
 ## Fuera del repositorio
 
 `C:\vcpkg` contiene FreeGLUT para compilar en esta computadora. No se sube al repositorio ni debe agregarse a Git.
+
+## Ajustes para la integración (2026-11-13)
+- Se restauró `src/main.cpp` y `src/camara/Camara.cpp` desde `development` para no sobrescribir M08/M10.
+- Se devolvió la geometría a `src/objetos/Entorno.cpp` y se restauró `CMakeLists.txt`.
+- Se añadió texturizado opcional por M05, con UV repetidas 4 veces y escala escénica 12x12.

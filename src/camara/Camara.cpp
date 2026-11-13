@@ -17,9 +17,9 @@ void aplicar() {
     // VERSION BASE: cambia al instante, por lo tanto NO satisface SLERP.
     // M08 reemplazara esto por orientacion de cuaternion interpolado.
     switch (vistaActual) {
-        case 2: gluLookAt(18.0, 12.0, 0.4, 0.0, 0.55, 0.0, 0.0, 1.0, 0.0); break;
-        case 3: gluLookAt(12.0, 21.0, 10.0, 0.0, 0.50, 0.0, 0.0, 1.0, 0.0); break;
-        default: gluLookAt(16.2, 12.8, 20.2, 0.0, 0.55, 0.0, 0.0, 1.0, 0.0); break;
+        case 2: gluLookAt(6.0, 3.9, 0.1, 0.0, 1.55, 0.0, 0.0, 1.0, 0.0); break;
+        case 3: gluLookAt(3.4, 7.8, 3.0, 0.0, 1.45, 0.0, 0.0, 1.0, 0.0); break;
+        default: gluLookAt(4.7, 3.8, 6.5, 0.0, 1.6, 0.0, 0.0, 1.0, 0.0); break;
     }
 }
 }

@@ -1,6 +1,11 @@
 #include <GL/freeglut.h>
 #include <cmath>
 #include "excalibur/Objetos.h"
+#include "excalibur/Graficos.h"
+#if __has_include("excalibur/Texturas.h")
+#include "excalibur/Texturas.h"
+#define EXCALIBUR_M05_DISPONIBLE 1
+#endif
 
 namespace excalibur::objetos {
 namespace {
@@ -236,16 +241,30 @@ void dibujarConejo(float x, float z) {
 } // namespace
 
 void dibujarEntorno() {
+    // M04 se modelo en 23x23 unidades; presentar la vitrina en 12x12,
+    // sin escalar los modulos de piedra y espada.
+    glPushMatrix();
+    constexpr float escalaEscena = 12.0f / 23.0f;
+    glScalef(escalaEscena, escalaEscena, escalaEscena);
+#ifdef EXCALIBUR_M09_MATERIALES
+    graficos::aplicarMaterial(graficos::Material::Entorno);
+#endif
+#ifdef EXCALIBUR_M05_DISPONIBLE
+    graficos::activarTextura(graficos::Textura::Suelo);
+    glColor3f(1.0f, 1.0f, 1.0f);
+#endif
     // Suelo: cuatro vértices, normal +Y, winding CCW y UV completos.
     glColor3f(0.22f, 0.30f, 0.20f);
     glBegin(GL_QUADS);
     glNormal3f(0.0f, 1.0f, 0.0f);
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-11.5f, 0.0f, -11.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-11.5f, 0.0f,  11.5f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f( 11.5f, 0.0f,  11.5f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f( 11.5f, 0.0f, -11.5f);
+    glTexCoord2f(0.0f, 4.0f); glVertex3f(-11.5f, 0.0f,  11.5f);
+    glTexCoord2f(4.0f, 4.0f); glVertex3f( 11.5f, 0.0f,  11.5f);
+    glTexCoord2f(4.0f, 0.0f); glVertex3f( 11.5f, 0.0f, -11.5f);
     glEnd();
-
+#ifdef EXCALIBUR_M05_DISPONIBLE
+    graficos::desactivarTextura();
+#endif
     dibujarSistemaDeAgua();
 
     // Todo queda fuera del área central reservada para la piedra y la espada.
@@ -273,5 +292,6 @@ void dibujarEntorno() {
     dibujarConejo(5.40f, -4.70f);
     dibujarConejo(-5.30f, -4.15f);
     dibujarConejo(5.80f, 4.40f);
+    glPopMatrix();
 }
 }
