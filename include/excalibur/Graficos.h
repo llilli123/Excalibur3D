@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+// Marca de disponibilidad para integrar materiales sin exigir M09 en ramas aisladas.
+#define EXCALIBUR_M09_MATERIALES 1
+
 namespace excalibur::graficos {
     struct Vec3 { float x{}, y{}, z{}; };
     struct Vec2 { float u{}, v{}; };
@@ -21,7 +24,25 @@ namespace excalibur::graficos {
                                      const std::vector<unsigned>& indices);
     void configurarCulling();
 
-    // M09. Iluminacion clasica OpenGL, punto de partida.
+    // M09. Iluminacion clasica OpenGL y materiales (modelo Phong)
     void inicializarIluminacion();
     void aplicarIluminacion();
+
+    enum class Material {
+        MetalHoja,
+        MetalDorado,
+        CueroMango,
+        Piedra,
+        Entorno,
+        Defecto
+    };
+
+    void aplicarMaterial(Material mat);
+    void materialMetalHoja();
+    void materialMetalDorado();
+    void materialCuero();
+    void materialPiedra();
+    void materialEntorno();
+    void alternarLuzSecundaria();
+    bool estaLuzSecundariaActiva();
 }
