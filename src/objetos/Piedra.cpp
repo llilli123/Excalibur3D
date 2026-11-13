@@ -11,6 +11,10 @@
 #include <cmath>
 #include "excalibur/Graficos.h"
 #include "excalibur/Objetos.h"
+#if __has_include("excalibur/Texturas.h")
+#include "excalibur/Texturas.h"
+#define EXCALIBUR_M05_DISPONIBLE 1
+#endif
 
 namespace excalibur::objetos {
 namespace {
@@ -67,8 +71,14 @@ Malla crearRoca() {
             unsigned c = b + 1;
             unsigned d = a + 1;
             // Orden antihorario visto desde fuera (necesario para GL_CULL_FACE).
-            roca.indices.push_back(a); roca.indices.push_back(c); roca.indices.push_back(b);
-            roca.indices.push_back(a); roca.indices.push_back(d); roca.indices.push_back(c);
+            // En los polos se duplican posiciones: omitir el triangulo degenerado.
+            // El resto conserva el mismo winding CCW hacia el exterior.
+            if (i < ANILLOS - 1) {
+                roca.indices.push_back(a); roca.indices.push_back(c); roca.indices.push_back(b);
+            }
+            if (i > 0) {
+                roca.indices.push_back(a); roca.indices.push_back(d); roca.indices.push_back(c);
+            }
         }
     }
 
@@ -98,7 +108,15 @@ Malla crearRoca() {
 void dibujarPiedra() {
     static Malla roca = crearRoca();   // se crea una sola vez y se reutiliza
 
-    glColor3f(0.42f, 0.45f, 0.46f);    // gris piedra
+#ifdef EXCALIBUR_M09_MATERIALES
+    graficos::aplicarMaterial(graficos::Material::Piedra);
+#endif
+#ifdef EXCALIBUR_M05_DISPONIBLE
+    graficos::activarTextura(graficos::Textura::Roca);
+    glColor3f(1.0f, 1.0f, 1.0f); // Evita oscurecer la fotografia con GL_MODULATE.
+#else
+    glColor3f(0.42f, 0.45f, 0.46f); // Apariencia provisional si M05 no esta integrado.
+#endif
     glBegin(GL_TRIANGLES);
     for (unsigned k : roca.indices) {
         glNormal3f(roca.normales[k].x, roca.normales[k].y, roca.normales[k].z);
@@ -106,5 +124,8 @@ void dibujarPiedra() {
         glVertex3f(roca.posiciones[k].x, roca.posiciones[k].y, roca.posiciones[k].z);
     }
     glEnd();
+#ifdef EXCALIBUR_M05_DISPONIBLE
+    graficos::desactivarTextura();
+#endif
 }
 }
