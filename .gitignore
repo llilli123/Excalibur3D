@@ -12,3 +12,10 @@
 *.dll
 *.log
 .DS_Store
+
+# Archivos locales generados por IDE/CMake (no versionar)
+/cmake-build-*/
+/.idea/
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/

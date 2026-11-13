@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(1000, 700);
     glutInitWindowPosition(80, 60);
-    glutCreateWindow("Excalibur 3D - Base modular CG II");
+    glutCreateWindow("Excalibur 3D - La espada en la piedra");
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
     inicializarGL();
@@ -72,8 +72,7 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(excalibur::controles::teclado);
     glutTimerFunc(16, temporizador, 0);
 
-    std::cout << "Excalibur 3D (base): 1/2/3 vistas, P wireframe, ESC salir.\n"
-              << "PENDIENTE: texturas UV reales, normales verificadas y camara SLERP.\n";
+    std::cout << "Excalibur 3D: 1/2/3 vistas, P alambre, L luz secundaria (M09), ESC salir.\n";
     glutMainLoop();
     excalibur::graficos::liberarTexturas();
     return 0;

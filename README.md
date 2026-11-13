@@ -27,26 +27,27 @@ En Linux, ejecute `./build/Excalibur3D`.
 En Windows, ejecute `build/Excalibur3D.exe` o busque el .exe generado en `build/Debug/`
 si utiliza un generador multiconfiguracion (Visual Studio).
 
-## Teclas que ya funcionan
-- `1`, `2`, `3`: vistas instantaneas (SLERP todavia NO implementado).
+## Controles y dependencias
+- `1`, `2`, `3`: cambian de vista. Al integrar M07 y M08, la transición usa SLERP.
 - `P`: ver en modo alambre para inspeccionar geometria.
 - `ESC`: salir.
+- `L`: alterna la segunda luz cuando M09 está integrado.
 
 ## Escena inicial
 Espada simple (cubos), empunadura, roca (esfera deformada), plano de suelo y
 una luz clasica. Esta previsualizacion puede visualizarse incluso sin imagenes.
-La escena final debe sustituir placeholders y demostrar mallas propias, UV y SLERP.
+Las implementaciones definitivas se incorporan desde las ramas de los módulos; el repositorio de integración debe demostrar mallas propias, UV y SLERP.
 
 ## Distribucion y ramas
 | Modulo | Trabajo | Rama |
 |---|---|---|
-| M01 | Hoja de la espada | `feature/m01-hoja` |
-| M02 | Empunadura | `feature/m02-empunadura` |
+| M01 | Hoja de la espada | `feature/m01-espada-hoja` |
+| M02 | Empunadura | `feature/m02-espada-empunadura` |
 | M03 | Piedra | `feature/m03-piedra` |
 | M04 | Entorno | `feature/m04-entorno` |
 | M05 | Texturas UV | `feature/m05-texturas` |
 | M06 | Mallas, normales, culling | `feature/m06-normales` |
-| M07 | Cuaterniones y SLERP | `feature/m07-slerp` |
+| M07 | Cuaterniones y SLERP | `feature/m07-cuaterniones` |
 | M08 | Camara y transiciones | `feature/m08-camara` |
 | M09 | Iluminacion, materiales | `feature/m09-iluminacion` |
 | M10 | Controles, integracion | `feature/m10-integracion` |
@@ -54,9 +55,15 @@ La escena final debe sustituir placeholders y demostrar mallas propias, UV y SLE
 Lea `docs/CONTRATOS.md`, `docs/PLAN_DE_TRABAJO.md`, `docs/PRUEBAS.md`.
 Los nombres exactos de estas ramas estan tambien en el PDF.
 
+## Estrategia Git de este repositorio
+- `master`: rama predeterminada, no utilizarla para recibir funcionalidades sin revisión.
+- `development`: rama de integración, destino de los Pull Requests aprobados.
+- `feature/mXX-*`: rama individual de cada responsable.
+- M02 y M06 se completarán manualmente por el equipo; su versión publicada aún puede coincidir con la base.
+
 ## Reglas de colaboracion
 1. Cada responsable modifica principalmente sus archivos, sin editar `main.cpp` por su cuenta.
-2. PRs pequenos, probados; merge a `main` solo si compila.
+2. PRs pequenos, probados; merge a `development` tras revisión; conservar `master` estable.
 3. Cambiar firmas de `include/excalibur/*.h` requiere acuerdo previo.
 4. No subir la carpeta `build/` ni DLL/binarios ni material descargado con licencia dudosa.
 5. Documentar fuentes y fragmentos ajenos. Cada quien debe explicar su codigo en la defensa.
