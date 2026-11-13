@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+// Marca de disponibilidad para integrar materiales sin exigir M09 en ramas aisladas.
+#define EXCALIBUR_M09_MATERIALES 1
+
 namespace excalibur::graficos {
     struct Vec3 { float x{}, y{}, z{}; };
     struct Vec2 { float u{}, v{}; };

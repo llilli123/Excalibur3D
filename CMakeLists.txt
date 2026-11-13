@@ -19,6 +19,7 @@ if(NOT GLUT_FOUND)
     )
     set(FREEGLUT_BUILD_DEMOS OFF CACHE BOOL "" FORCE)
     set(FREEGLUT_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+    set(FREEGLUT_BUILD_STATIC_LIBS ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(freeglut)
 
     if(TARGET freeglut_static AND NOT TARGET GLUT::GLUT)
@@ -27,6 +28,10 @@ if(NOT GLUT_FOUND)
         add_library(GLUT::GLUT ALIAS freeglut)
     endif()
     set(GLUT_INCLUDE_DIRS ${freeglut_SOURCE_DIR}/include)
+endif()
+
+if(NOT TARGET GLUT::GLUT)
+    message(FATAL_ERROR "No se encontro una biblioteca FreeGLUT/GLUT enlazable")
 endif()
 
 add_executable(Excalibur3D
@@ -48,7 +53,7 @@ target_include_directories(Excalibur3D PRIVATE include ${GLUT_INCLUDE_DIRS})
 target_link_libraries(Excalibur3D PRIVATE OpenGL::GL OpenGL::GLU GLUT::GLUT)
 
 if(MSVC)
-    target_compile_options(Excalibur3D PRIVATE /W4 /EHsc /wd4505)
+    target_compile_options(Excalibur3D PRIVATE /W4 /EHsc)
 else()
     target_compile_options(Excalibur3D PRIVATE -Wall -Wextra -Wpedantic)
 endif()
