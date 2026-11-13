@@ -2,6 +2,8 @@
 #include <cmath>
 #include "excalibur/Objetos.h"
 #include "excalibur/Graficos.h"
+#include "excalibur/Agua.h"
+#include "excalibur/PaisajeLejano.h"
 #if __has_include("excalibur/Texturas.h")
 #include "excalibur/Texturas.h"
 #define EXCALIBUR_M05_DISPONIBLE 1
@@ -10,11 +12,6 @@
 namespace excalibur::objetos {
 namespace {
 constexpr float pi = 3.14159265358979323846f;
-
-struct PuntoPlano {
-    float x;
-    float z;
-};
 
 void verticeElipsoide(float radioX, float radioY, float radioZ,
                       float latitud, float longitud, float u, float v) {
@@ -94,64 +91,6 @@ void dibujarArbusto(float x, float z, float escala) {
     glPopMatrix();
 }
 
-void dibujarCanal(const PuntoPlano* orillaInferior, const PuntoPlano* orillaSuperior,
-                  int cantidadPuntos) {
-    glBegin(GL_QUAD_STRIP);
-    for (int i = 0; i < cantidadPuntos; ++i) {
-        const float u = static_cast<float>(i) / (cantidadPuntos - 1);
-        // Inferior y superior, de izquierda a derecha: winding CCW desde arriba.
-        glNormal3f(0.0f, 1.0f, 0.0f);
-        glTexCoord2f(u, 0.0f);
-        glVertex3f(orillaInferior[i].x, 0.012f, orillaInferior[i].z);
-        glNormal3f(0.0f, 1.0f, 0.0f);
-        glTexCoord2f(u, 1.0f);
-        glVertex3f(orillaSuperior[i].x, 0.012f, orillaSuperior[i].z);
-    }
-    glEnd();
-}
-
-void dibujarSistemaDeAgua() {
-    constexpr int segmentos = 32;
-    constexpr float radioExterior = 3.80f;
-    constexpr float radioInterior = 2.55f;
-
-    glColor3f(0.06f, 0.25f, 0.35f);
-
-    // Anillo circular: reserva un islote central para la piedra y la espada.
-    glBegin(GL_QUAD_STRIP);
-    for (int i = 0; i <= segmentos; ++i) {
-        const float u = static_cast<float>(i) / segmentos;
-        const float angulo = 2.0f * pi * u;
-        const float coseno = std::cos(angulo);
-        const float seno = std::sin(angulo);
-
-        // Exterior -> interior genera caras CCW vistas desde +Y.
-        glNormal3f(0.0f, 1.0f, 0.0f);
-        glTexCoord2f(u, 0.0f);
-        glVertex3f(radioExterior * coseno, 0.012f, radioExterior * seno);
-        glNormal3f(0.0f, 1.0f, 0.0f);
-        glTexCoord2f(u, 1.0f);
-        glVertex3f(radioInterior * coseno, 0.012f, radioInterior * seno);
-    }
-    glEnd();
-
-    // Dos flujos suaves conectan el anillo al borde del escenario.
-    constexpr PuntoPlano entradaInferior[] = {
-        {-11.45f, 0.88f}, {-8.80f, 0.42f}, {-6.40f, 0.02f}, {-4.82f, -0.32f}, {-3.66f, -0.50f}
-    };
-    constexpr PuntoPlano entradaSuperior[] = {
-        {-11.45f, 1.90f}, {-8.70f, 1.42f}, {-6.30f, 0.92f}, {-4.70f, 0.72f}, {-3.50f, 0.65f}
-    };
-    constexpr PuntoPlano salidaInferior[] = {
-        {3.62f, -0.70f}, {4.85f, -1.02f}, {6.70f, -1.32f}, {9.00f, -1.48f}, {11.45f, -1.92f}
-    };
-    constexpr PuntoPlano salidaSuperior[] = {
-        {3.75f, 0.55f}, {4.92f, 0.22f}, {6.76f, -0.12f}, {9.04f, -0.36f}, {11.45f, -0.28f}
-    };
-    dibujarCanal(entradaInferior, entradaSuperior, 5);
-    dibujarCanal(salidaInferior, salidaSuperior, 5);
-}
-
 void dibujarMadriguera(float x, float z, float escala, float rotacion) {
     glPushMatrix();
     glTranslatef(x, 0.0f, z);
@@ -191,24 +130,6 @@ void dibujarMataDeHierba(float x, float z, float escala, float rotacion) {
         dibujarElipsoide(0.040f * escala, 0.20f * escala, 0.040f * escala, 6, 4);
         glPopMatrix();
     }
-    glPopMatrix();
-}
-
-void dibujarMonteLejano(float x, float z, float radio, float alto) {
-    // Silueta de baja densidad: queda en el fondo sin competir con Excalibur.
-    glPushMatrix();
-    glTranslatef(x, 0.0f, z);
-    glRotatef(-90.0f, 1.0f, 0.0f, 0.0f); // cono FreeGLUT (+Z) a +Y
-    glColor3f(0.13f, 0.24f, 0.14f);
-    glutSolidCone(radio, alto, 9, 3);
-    glPopMatrix();
-
-    // Una segunda masa evita una silueta perfectamente cónica.
-    glPushMatrix();
-    glTranslatef(x + radio * 0.42f, 0.0f, z + radio * 0.18f);
-    glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
-    glColor3f(0.10f, 0.19f, 0.11f);
-    glutSolidCone(radio * 0.66f, alto * 0.72f, 8, 2);
     glPopMatrix();
 }
 
@@ -269,6 +190,8 @@ void dibujarEntorno() {
 #ifdef EXCALIBUR_M09_MATERIALES
     graficos::aplicarMaterial(graficos::Material::Entorno);
 #endif
+    // Horizonte, terreno extendido y montanas lejanas (feature/ambiente).
+    paisaje::dibujarPaisajeLejano();
 #ifdef EXCALIBUR_M05_DISPONIBLE
     graficos::activarTextura(graficos::Textura::Suelo);
     glColor3f(1.0f, 1.0f, 1.0f);
@@ -287,10 +210,7 @@ void dibujarEntorno() {
 #ifdef EXCALIBUR_M05_DISPONIBLE
     graficos::desactivarTextura();
 #endif
-    dibujarSistemaDeAgua();
-
-    // Al fondo de la primera vista: amplía la escena sin ocultar la piedra.
-    dibujarMonteLejano(-7.90f, -9.45f, 2.45f, 4.40f);
+    excalibur::agua::dibujarSistemaDeAgua();
 
     // Todo queda fuera del área central reservada para la piedra y la espada.
     dibujarRoca(-8.4f, -5.5f, 0.95f, 18.0f);
