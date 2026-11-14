@@ -2,6 +2,8 @@
 #include "excalibur/Controles.h"
 #include "excalibur/Camara.h"
 #include "excalibur/Graficos.h"
+#include "excalibur/EspadaInteractiva.h"
+#include "excalibur/Audio.h"
 
 namespace excalibur::controles {
 void teclado(unsigned char tecla, int /*x*/, int /*y*/) {
@@ -19,6 +21,15 @@ void teclado(unsigned char tecla, int /*x*/, int /*y*/) {
             excalibur::graficos::alternarLuzSecundaria();
             break;
 #endif
+        case 'e': case 'E':
+            excalibur::interaccion::extraerEspada();
+            break;
+        case 'r': case 'R':
+            excalibur::interaccion::devolverEspada();
+            break;
+        case 'm': case 'M':
+            excalibur::audio::alternarMusica();
+            break;
         case 27: glutLeaveMainLoop(); return; // ESC
         default: break;
     }

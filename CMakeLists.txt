@@ -20,7 +20,7 @@ find_package(OpenGL REQUIRED)
 # 2. FREEGLUT
 # ============================================================
 
-if(WIN32 AND MINGW)
+if(WIN32)
 
     # Compilar FreeGLUT estaticamente para evitar depender
     # de libfreeglut.dll durante la ejecucion.
@@ -65,6 +65,7 @@ add_executable(Excalibur3D
         src/objetos/Entorno.cpp
         src/objetos/PaisajeLejano.cpp
         src/objetos/Agua.cpp
+        src/objetos/EspadaInteractiva.cpp
 
         # Graficos
         src/graficos/Texturas.cpp
@@ -77,6 +78,9 @@ add_executable(Excalibur3D
 
         # Controles
         src/controles/Controles.cpp
+
+        # Audio
+        src/audio/Audio.cpp
 )
 
 target_include_directories(Excalibur3D PRIVATE include)
@@ -85,13 +89,18 @@ target_include_directories(Excalibur3D PRIVATE include)
 # 4. ENLAZAR BIBLIOTECAS
 # ============================================================
 
-if(WIN32 AND MINGW)
+if(WIN32)
 
     target_link_libraries(Excalibur3D PRIVATE
             freeglut_static
             OpenGL::GL
             OpenGL::GLU
             winmm
+    )
+
+    # Cabeceras de FreeGLUT descargado (GL/freeglut.h)
+    target_include_directories(Excalibur3D PRIVATE
+            ${freeglut_SOURCE_DIR}/include
     )
 
 else()

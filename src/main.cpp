@@ -5,6 +5,8 @@
 #include "excalibur/Graficos.h"
 #include "excalibur/Camara.h"
 #include "excalibur/Controles.h"
+#include "excalibur/EspadaInteractiva.h"
+#include "excalibur/Audio.h"
 
 namespace {
     int ultimoTickMs = 0;
@@ -20,8 +22,11 @@ namespace {
         // IMPORTANTE: mantener este orden e implementar cada modulo en su archivo.
         excalibur::objetos::dibujarEntorno();     // M04
         excalibur::objetos::dibujarPiedra();      // M03
+        glPushMatrix();
+        excalibur::interaccion::aplicarTransformacionEspada(); // hoja + empunadura juntas
         excalibur::objetos::dibujarHojaEspada();  // M01
         excalibur::objetos::dibujarEmpunadura();  // M02
+        glPopMatrix();
 
         glutSwapBuffers();
     }
@@ -40,6 +45,7 @@ namespace {
         const float delta = (ultimoTickMs > 0) ? (ahora - ultimoTickMs) / 1000.0f : 0.016f;
         ultimoTickMs = ahora;
         excalibur::camara::actualizar(std::min(delta, 0.05f));
+        excalibur::interaccion::actualizarEspada(std::min(delta, 0.05f));
         glutPostRedisplay();
         glutTimerFunc(16, temporizador, 0);
     }
@@ -72,8 +78,9 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(excalibur::controles::teclado);
     glutTimerFunc(16, temporizador, 0);
 
-    std::cout << "Excalibur 3D: 1/2/3 vistas, P alambre, L luz secundaria (M09), ESC salir.\n";
+    std::cout << "Excalibur 3D: 1/2/3 vistas, P alambre, L luz secundaria (M09), E extraer, R devolver, M musica, ESC salir.\n";
     glutMainLoop();
+    excalibur::audio::detenerMusica();
     excalibur::graficos::liberarTexturas();
     return 0;
 }
