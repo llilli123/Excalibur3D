@@ -63,6 +63,8 @@ add_executable(Excalibur3D
         src/objetos/EspadaEmpunadura.cpp
         src/objetos/Piedra.cpp
         src/objetos/Entorno.cpp
+        src/objetos/PaisajeLejano.cpp
+        src/objetos/Agua.cpp
 
         # Graficos
         src/graficos/Texturas.cpp
